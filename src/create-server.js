@@ -1,5 +1,6 @@
 const cors = require('cors')
 const express = require('express')
+const morgan = require('morgan')
 const getComments = require('./get-comments')
 const getCommentsFromCache = require('./caching/get-comments-from-cache')
 const putCommentsInCache = require('./caching/put-comments-in-cache')
@@ -7,6 +8,7 @@ const putCommentsInCache = require('./caching/put-comments-in-cache')
 module.exports = (mysqlConn, redisConn) => {
     const server = express()
 
+    server.use(morgan('combined'))
     server.use(cors())
 
     server.get('/health', (req, res) => {
